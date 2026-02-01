@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I'm Sorry</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --dark:#050505;
+  --glass:rgba(255,255,255,0.08);
+  --glow:#8f5cff;
+  --soft:#cfcfcf;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:var(--dark);
+  color:white;
+  font-family:'Poppins',sans-serif;
+  overflow-x:hidden;
+}
+
+/* ---------- GLOBAL EFFECTS ---------- */
+.glass{
+  background:var(--glass);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:20px;
+}
+
+/* Floating particles */
+.particles{
+  position:fixed;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:-1;
+}
+
+.particles span{
+  position:absolute;
+  width:4px;
+  height:4px;
+  background:white;
+  opacity:0.2;
+  border-radius:50%;
+  animation:float 15s linear infinite;
+}
+
+@keyframes float{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+
+/* ---------- PAGE 1 : HERO ---------- */
+.hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:radial-gradient(circle at top,#120a2a, #050505 70%);
+}
+
+.hero-emoji{
+  font-size:4rem;
+  animation:floatEmoji 3s ease-in-out infinite;
+}
+
+@keyframes floatEmoji{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-20px);}
+}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:4rem;
+  margin-top:20px;
+  text-shadow:0 0 25px var(--glow);
+}
+
+.scroll{
+  margin-top:40px;
+  opacity:0.7;
+  animation:bounce 1.8s infinite;
+}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(12px);}
+}
+
+/* ---------- POPUP ---------- */
+.popup{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(8px);
+  z-index:99;
+  opacity:0;
+  pointer-events:none;
+  transition:0.6s;
+}
+
+.popup.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.popup-box{
+  padding:40px 60px;
+  font-size:2rem;
+  font-family:'Playfair Display',serif;
+  animation:heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+}
+
+/* ---------- MEMORY ALBUM ---------- */
+.album{
+  padding:120px 8%;
+  text-align:center;
+}
+
+.album-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+  margin-top:60px;
+}
+
+.photo{
+  position:relative;
+  overflow:hidden;
+  border-radius:16px;
+}
+
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:0.5s;
+}
+
+.photo:hover img{
+  transform:scale(1.1);
+  filter:brightness(0.5);
+}
+
+.photo span{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transition:0.5s;
+  font-family:'Playfair Display',serif;
+}
+
+.photo:hover span{
+  opacity:1;
+}
+
+/* ---------- PAGE 2 ---------- */
+.section{
+  padding:120px 10%;
+}
+
+.lyrics p{
+  font-size:1.8rem;
+  opacity:0;
+  transform:translateY(20px);
+  transition:0.8s;
+}
+
+.lyrics p.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.highlight{
+  margin-top:60px;
+  padding:40px;
+  font-size:1.2rem;
+}
+
+/* ---------- THINGS SHE LOVES ---------- */
+.loves{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:25px;
+  margin-top:50px;
+}
+
+.love-card{
+  padding:30px;
+  text-align:center;
+  transition:0.4s;
+}
+
+.love-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 0 25px var(--glow);
+}
+
+/* ---------- PAGE 3 ---------- */
+.final{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:radial-gradient(circle,#120a2a,#050505);
+}
+
+.final h1{
+  font-size:3rem;
+  animation:floatEmoji 3s infinite;
+}
+
+.fade-out{
+  height:200px;
+}
+.quiz-section{
+  margin-top:120px;
+  padding:60px;
+  text-align:center;
+}
+
+#question{
+  font-size:1.5rem;
+  margin-bottom:30px;
+  font-family:'Playfair Display',serif;
+}
+
+.options button{
+  display:block;
+  width:100%;
+  max-width:400px;
+  margin:12px auto;
+  padding:14px;
+  border:none;
+  border-radius:25px;
+  background:rgba(255,255,255,0.08);
+  color:white;
+  cursor:pointer;
+  transition:0.4s;
+}
+
+.options button:hover{
+  background:rgba(255,255,255,0.15);
+  transform:scale(1.03);
+}
+
+#quizProgress{
+  margin-top:30px;
+  opacity:0.6;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PARTICLES -->
+<div class="particles">
+  <span style="left:10%;animation-duration:18s"></span>
+  <span style="left:30%;animation-duration:22s"></span>
+  <span style="left:50%;animation-duration:20s"></span>
+  <span style="left:70%;animation-duration:26s"></span>
+  <span style="left:90%;animation-duration:19s"></span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-emoji">🥺</div>
+  <h1>I’m Sorry DIYUUU</h1>
+  <div class="scroll">↓ Scroll down</div>
+</section>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <div class="popup-box glass">I’m sorry baby.</div>
+</div>
+
+<!-- MEMORY ALBUM -->
+<section class="album">
+  <h2>Memories 🌙</h2>
+  <div class="album-grid">
+    <div class="photo"><img src="https://picsum.photos/400/400?1"><span>Us ❤️</span></div>
+    <div class="photo"><img src="https://picsum.photos/400/400?2"><span>That smileeee</span></div>
+    <div class="photo"><img src="https://picsum.photos/400/400?3"><span>Your Presenceee</span></div>
+  </div>
+</section>
+
+<!-- PAGE 2 -->
+<section class="section">
+  <div class="lyrics">
+    <p>Every silence screamed your name…</p>
+    <p>I never meant to hurt you…</p>
+    <p>You were always my peace…</p>
+  </div>
+
+  <div class="highlight glass">
+    <em>Hi, SHALLU you're so special for me, aur tu humesha rahegi, I'm so sorry for what I did. Never meant anything par ye btadu tumse pyaar boht hai yrr. Tumhari presence meri life mein ek sukoon jaisi hai — bina awaaz ke bhi sab kuch keh jaati hai.
+Jab tum paas hoti ho, toh duniya thodi slow ho jaati hai, aur jab door hoti ho, toh har cheez thodi adhuri si lagti hai.
+Mujhe shayad samajhne mein der lagi, par tumhari ek muskaan meri har thakaan mita sakti hai, aur tumhari ek khamoshi mujhe apni galti ka ehsaas dila deti hai.
+
+Main maanta hoon, mujhse galti hui… par yeh bhi sach hai ki tumhari jagah meri zindagi mein koi aur le hi nahi sakta.
+Tum sirf meri aadat nahi, meri zaroorat ho.
+Dil se sorry… kyunki tum meri woh feeling ho jise main khona nahi chahta.”</em>
+  </div>
+
+  <div class="loves">
+    <div class="love-card glass">🖤 Black</div>
+    <div class="love-card glass">🍽️ Idli</div>
+    <div class="love-card glass">🏔️ Mountains</div>
+    <div class="love-card glass">👗 Sari</div>
+    <div class="love-card glass">🧘‍♀️ Spirituality</div>
+    <div class="love-card glass">🧥 Suit</div>
+    <div class="love-card glass">❤️ Me</div>
+  </div>
+</section>
+
+<!-- PAGE 3 -->
+<section class="final">
+  <h1>💖 Thank You</h1>
+  <h1>💞 I Love Youuu</h1>
+</section>
+
+<div class="fade-out"></div>
+<section class="quiz-section glass">
+  <h2>A Little Something 💌</h2>
+  <p class="quiz-sub">Answer honestly… no pressure 🥺</p>
+
+  <div id="quizBox">
+    <p id="question"></p>
+
+    <div class="options">
+      <button onclick="selectAnswer(0)"></button>
+      <button onclick="selectAnswer(1)"></button>
+      <button onclick="selectAnswer(2)"></button>
+    </div>
+  </div>
+
+  <p id="quizProgress"></p>
+</section>
+
+<script>
+// POPUP ON FIRST SCROLL
+let shown=false;
+window.addEventListener("scroll",()=>{
+  if(window.scrollY>50 && !shown){
+    document.getElementById("popup").classList.add("active");
+    shown=true;
+    setTimeout(()=>{
+      document.getElementById("popup").classList.remove("active");
+    },2500);
+  }
+});
+
+const quiz = [
+  {
+    q: "When I think of you, what do I feel first?",
+    options: ["Confusion", "Peace", "Nothing"],
+    correct: 1
+  },
+  {
+    q: "Tumhari presence mere liye kya hai?",
+    options: ["Habit", "Sukoon", "Timepass"],
+    correct: 1
+  },
+  {
+    q: "Agar main chup ho jaata hoon, iska matlab?",
+    options: ["I don’t care", "I’m tired", "I’m thinking about you"],
+    correct: 2
+  },
+  {
+    q: "Meri sabse badi galti kya rahi?",
+    options: ["Not listening", "Being too honest", "Being careless"],
+    correct: 0
+  },
+  {
+    q: "Tumhari ek smile kya kar sakti hai?",
+    options: ["Mood change", "Day better", "Everything better"],
+    correct: 2
+  },
+  {
+    q: "Main tumse kya promise karna chahta hoon?",
+    options: ["Perfect banna", "Better banna", "Same rehna"],
+    correct: 1
+  },
+  {
+    q: "Tum meri life mein kaun ho?",
+    options: ["Option", "Important", "Irreplaceable"],
+    correct: 2
+  },
+  {
+    q: "Agar tum door ho jao?",
+    options: ["I’ll manage", "I’ll wait", "I’ll miss you badly"],
+    correct: 2
+  },
+  {
+    q: "Yeh website kyun banayi?",
+    options: ["Timepass", "Ego", "Dil se sorry bolne ke liye"],
+    correct: 2
+  },
+  {
+    q: "Last question… kya tum mujhe maaf kar sakti ho?",
+    options: ["Maybe", "Yes", "Always"],
+    correct: 2
+  }
+];
+
+let index = 0;
+let score = 0;
+
+const questionEl = document.getElementById("question");
+const buttons = document.querySelectorAll(".options button");
+const progress = document.getElementById("quizProgress");
+
+function loadQuestion(){
+  const q = quiz[index];
+  questionEl.innerText = q.q;
+  buttons.forEach((btn,i)=>{
+    btn.innerText = q.options[i];
+  });
+  progress.innerText = `Question ${index+1} / 10`;
+}
+
+function selectAnswer(i){
+  if(i === quiz[index].correct) score++;
+  index++;
+
+  if(index < quiz.length){
+    loadQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult(){
+  document.getElementById("quizBox").innerHTML = `
+    <h2>💖 Thank You</h2>
+    <p style="margin-top:20px;font-size:1.3rem">
+      Score doesn’t matter.<br>
+      Bas itna kaafi hai ki tum yahan tak aayi ho.<br><br>
+      Main sach mein tumse bohot pyaar karta hoon.
+    </p>
+  `;
+}
+
+loadQuestion();
+
+
+// LYRIC REVEAL
+const lyrics=document.querySelectorAll(".lyrics p");
+window.addEventListener("scroll",()=>{
+  lyrics.forEach((p,i)=>{
+    const rect=p.getBoundingClientRect();
+    if(rect.top<window.innerHeight-100){
+      setTimeout(()=>p.classList.add("show"),i*400);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
